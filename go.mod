@@ -1,4 +1,4 @@
-module github.com/febytanzil/gobroker
+module github.com/pallid/gobroker
 
 go 1.12
 

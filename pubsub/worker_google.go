@@ -175,7 +175,7 @@ func (g *googleWorker) Stop() error {
 	return g.c.Close()
 }
 
-// ChangeMaxInFlight
+// ChangeMaxInFlight mock
 func (g *googleWorker) ChangeMaxInFlight(mif int) {
 	return
 }
