@@ -184,3 +184,8 @@ func (r *rabbitMQWorker) initConn(queue, exchange string) error {
 
 	return nil
 }
+
+// ChangeMaxInFlight mock
+func (r *rabbitMQWorker) ChangeMaxInFlight(mif int) {
+	return
+}

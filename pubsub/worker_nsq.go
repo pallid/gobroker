@@ -1,10 +1,11 @@
 package pubsub
 
 import (
-	"github.com/febytanzil/gobroker"
-	"github.com/nsqio/go-nsq"
 	"log"
 	"time"
+
+	"github.com/febytanzil/gobroker"
+	"github.com/nsqio/go-nsq"
 )
 
 type nsqWorker struct {
@@ -77,4 +78,16 @@ func (n *nsqWorker) nsqMiddleware(h gobroker.Handler) nsq.HandlerFunc {
 		m.Finish()
 		return nil
 	}
+}
+
+// ChangeMaxInFlight sets a new maximum number of messages this comsumer instance
+// will allow in-flight, and updates all existing connections as appropriate.
+//
+// For example, ChangeMaxInFlight(0) would pause message flow
+//
+// If already connected, it updates the reader RDY state for each connection.
+//
+// link https://github.com/nsqio/go-nsq/blob/bf9a77050449936dcfabaab30776812f04886ce6/consumer.go#L310
+func (n *nsqWorker) ChangeMaxInFlight(mif int) {
+	n.channel.ChangeMaxInFlight(mif)
 }

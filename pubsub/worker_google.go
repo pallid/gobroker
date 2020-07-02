@@ -7,10 +7,11 @@ import (
 	"strconv"
 	"sync/atomic"
 
+	"time"
+
 	"cloud.google.com/go/pubsub"
 	"github.com/febytanzil/gobroker"
 	"google.golang.org/api/option"
-	"time"
 )
 
 type googleWorker struct {
@@ -172,4 +173,9 @@ func (g *googleWorker) Stop() error {
 	}
 
 	return g.c.Close()
+}
+
+// ChangeMaxInFlight
+func (g *googleWorker) ChangeMaxInFlight(mif int) {
+	return
 }

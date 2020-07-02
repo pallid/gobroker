@@ -1,8 +1,9 @@
 package pubsub
 
 import (
-	"github.com/febytanzil/gobroker"
 	"time"
+
+	"github.com/febytanzil/gobroker"
 )
 
 // Subscriber provides adapter to subscribe topics
@@ -11,11 +12,13 @@ type Subscriber interface {
 	Start()
 	// Stop will terminate all connections and workers
 	Stop()
+	ChangeMaxInFlight(mif int)
 }
 
 type worker interface {
 	Consume(name, topic string, maxRequeue int, handler gobroker.Handler)
 	Stop() error
+	ChangeMaxInFlight(mif int)
 }
 
 // SubHandler defines subscriber configuration
@@ -102,5 +105,18 @@ func (d *defaultSubscriber) Stop() {
 		for j := range d.workers {
 			d.workers[j].Stop()
 		}
+	}
+}
+
+func (d *defaultSubscriber) ChangeMaxInFlight(mif int) {
+	switch d.impl {
+	case gobroker.NSQ:
+		for range d.subs {
+			for j := range d.workers {
+				d.workers[j].ChangeMaxInFlight(mif)
+			}
+		}
+	default:
+
 	}
 }
